@@ -1,0 +1,23 @@
+{
+  "name": "test-web-stack",
+  "version": "1.0.0",
+  "description": "Be sure to read **all** of this document carefully, and follow the guidelines within.",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"cd server && nodemon server\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/southamericanbear/test-web-stack.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/southamericanbear/test-web-stack/issues"
+  },
+  "homepage": "https://github.com/southamericanbear/test-web-stack#readme",
+  "dependencies": {
+    "concurrently": "^6.5.1"
+  }
+}
