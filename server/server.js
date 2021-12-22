@@ -1,34 +1,33 @@
-require("dotenv").config();
-const express = require("express");
-const { graphqlHTTP } = require("express-graphql");
-const mongoose = require("mongoose");
-const models = require("./models");
-const schema = require("./schema/schema");
+const { ApolloServer, gql } = require("apollo-server");
 
-const app = express();
+const users = [
+  {
+    name: "Alan",
+    position: "Full Stack",
+  },
+  {
+    name: "Charles",
+    position: "Backend",
+  },
+];
 
-const PORT = process.env.PORT;
-const MONGO_PASS = process.env.MONGO_PASS;
+const typeDefs = gql`
+  type User {
+    name: String
+    position: String
+  }
 
-const MONGO_URI = `mongodb+srv://admin:${MONGO_PASS}@cluster0.it2sp.mongodb.net/superformulatest?retryWrites=true&w=majority`;
+  type Query {
+    users: [User]
+  }
+`;
 
-if (!MONGO_URI) throw new Error("You must provide a MongoDB URI!");
+const resolvers = {
+  Query: {
+    users: () => users,
+  },
+};
 
-mongoose.Promise = global.Promise;
-mongoose.connect(MONGO_URI);
-mongoose.connection
-  .once("open", () => console.log("Connected to MongoDB instance."))
-  .on("error", (error) =>
-    console.log(`Error conecting to MongoDB instance: ${error}`)
-  );
+const server = new ApolloServer({ typeDefs, resolvers });
 
-app.use(express.json());
-app.use(
-  "/graphql",
-  graphqlHTTP({
-    schema,
-    graphiql: true,
-  })
-);
-
-app.listen(PORT, () => console.log(`listening on port: ${PORT}`));
+server.listen().then(({ url }) => console.log(`Server ready at ${url}`));

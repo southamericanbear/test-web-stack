@@ -4,7 +4,8 @@
   "description": "Be sure to read **all** of this document carefully, and follow the guidelines within.",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"cd server && nodemon server\""
+    "start": "concurrently \"cd server && node server\"",
+    "dev": "concurrently \"cd server && nodemon server\""
   },
   "repository": {
     "type": "git",
