@@ -4,13 +4,6 @@ const mongoose = require("mongoose");
 const User = mongoose.model("user");
 const UserType = require("./user_type");
 
-const UpdateUser = new GraphQLObjectType({
-  name: "UpdateUser",
-  fields: () => ({
-    name: { type: GraphQLString },
-  }),
-});
-
 const mutations = new GraphQLObjectType({
   name: "Mutation",
   fields: {
@@ -41,10 +34,20 @@ const mutations = new GraphQLObjectType({
       type: UserType,
       args: {
         id: { type: GraphQLID },
-        input: { type: UpdateUser },
+        name: { type: GraphQLString },
+        adress: { type: GraphQLString },
+        description: { type: GraphQLString },
       },
-      resolve(_, { id, input }) {
-        return User.findOneAndUpdate(id, input, { new: true });
+      resolve(_, { id, name, adress, description }) {
+        return User.findOneAndUpdate(
+          id,
+          {
+            name,
+            adress,
+            description,
+          },
+          { new: true }
+        );
       },
     },
   },
